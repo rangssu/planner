@@ -1,0 +1,233 @@
+@charset "UTF-8";
+/* 스크롤바 막대 꾸미기 */
+.mainCon {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+}
+
+.middle {
+	margin-top: 40px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: space-around;
+	display: flex;
+	width: 100%;
+}
+
+.myeongUnBox {
+	width: 100%;
+}
+
+.noticeBox {
+	width: 40%;
+	background-color: #F8F9FA;
+	border-style: none;
+	border-radius: 20px;
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+}
+
+.todayBox {
+	width: 20%;
+	background-color: #F8F9FA;
+	border-style: none;
+	border-radius: 20px;
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+}
+
+.todaySchedule, .noticeContent {
+	border-radius: 20px;
+	background-color: white;
+	padding: 20px;
+	border-style: hidden;
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0;
+	box-shadow: 5px 5px 3px #ddd;
+}
+
+.img {
+	width: 100%;
+}
+
+.todayText, .noticeText {
+	color: gray;
+	font-weight: bold;
+	font-size: 35px;
+	margin-bottom: 20px;
+}
+
+.scheduleContent {
+	padding-left: 10px;
+	font-size: 20px;
+	color: #C0C6D1;
+}
+
+.deleteBtn {
+	border-style: none;
+	background-color: rgba(20, 250, 230, 0);
+	color: rgb(180, 180, 180);
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.deleteBtn:hover {
+	color: red;
+}
+
+.addScheduleBtnBox {
+	text-align: right;
+}
+
+.addScheduleBtn {
+	cursor: pointer;
+	width: 100%;
+	font-size: 15px;
+	font-weight: bold;
+	color: #8D94A2;
+	margin-top: 30px;
+	height: 45px;
+	border-style: none;
+	border-radius: 10px;
+	background-color: #E9ECEF;
+}
+
+.titleBox {
+	align-items: center;
+	justify-content: space-between;
+	display: flex;
+}
+
+.title {
+	font-size: 17px;
+	font-weight: bold;
+	color: #888D92;
+}
+
+.more {
+	margin-left: 20px;
+	text-decoration: none;
+	color: rgb(150, 150, 150);
+}
+
+.line {
+	color: #ddd;
+	margin: 10px 0;
+}
+
+.timeBox {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	font-weight: 600;
+	color: #495057;
+	font-size: 35px;
+	word-break: break-all;
+}
+
+.locationBox {
+	margin-top: 20px;
+	display: flex;
+}
+
+.location {
+	width: 15%;
+}
+
+.address {
+	font-weight: bold;
+	font-size: 15px;
+	color: darkgray;
+}
+
+/* 모달*/
+#noticeModal {
+	position: fixed;
+	display: none;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 999;
+}
+
+.noticeModalBody {
+	position: relative;
+	width: 1000px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background: #ffffff;
+	border-radius: 20px;
+	height: 800px;
+	overflow: auto;
+	scrollbar-color: #ddd rgb(255, 255, 255);
+	scrollbar-width : none;
+	
+}
+
+.modalMain {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.noticeDetailBox {
+	display: flex;
+}
+
+.noticeTitle {
+	font-size: 17px;
+	font-weight: bold;
+	color: #888D92;
+	cursor: pointer;
+}
+
+.noticeDetail {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.notice_top {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	justify-content: space-between;
+	border-bottom: 2px solid black;
+	font-weight: 600;
+	color: #495057;
+	font-size: 35px;
+	padding: 5px 10px;
+}
+
+.notice_reg {
+	font-size: 20px;
+}
+
+.notice_content {
+	padding: 10px 15px;
+}
+
+.notice_content img, .notice_top, .Xbtn {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-use-select: none;
+	user-select: none;
+}
+
+.Xbtn:hover, .closeBtn:hover {
+	color: red;
+}

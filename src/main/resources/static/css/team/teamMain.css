@@ -1,0 +1,44 @@
+#main-container{
+	min-width:540px;
+	max-width:1080px;
+}
+#page-title{
+	margin:5px 15px 20px;
+}
+#noteam{
+	width:500px;
+	margin:20px auto;
+}
+#noteam a{
+	text-decoration:none;
+	color:blue;
+	padding:3px;
+	font-size:20px;
+	transition:0.12s;
+}
+#noteam a:hover{
+	color:red;
+}
+.team-item{
+	width:205px;
+	margin:5px 10px;
+}
+.team-name{
+	transform:translateY(-3px);
+	padding-bottom:5px;
+}
+.team-item div{
+	width:100px;
+	height:100px;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+.team-item span{
+	padding:1px;
+	transition:0.12s;
+}
+.team-item span[data-link]:hover{
+	color:red;
+}

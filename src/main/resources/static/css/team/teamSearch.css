@@ -1,0 +1,54 @@
+#team-search{
+	margin-bottom:5px;
+	line-height:1.6;
+}
+#team-search select{
+	height:24px;
+	text-align:center;
+	padding:2px;
+}
+#team-search input{
+	height:24px;
+	width:250px;
+	padding:2px 5px;
+}
+.team{
+	width:558px;
+	height:120px;
+	margin:7px 10px;
+	padding:10px;
+	cursor:pointer;
+	border: 1px darkgray solid;
+}
+.team img{
+	padding-top:5px;
+}
+.team td{
+	padding:3px 5px;
+}
+.team .thead{
+	width:90px;
+}
+.team .tbody{
+	width:330px;
+}
+#pagebar{
+	width:max-content;
+	margin:10px auto;
+}
+#pagebar a{
+	padding:2px 3px;
+	text-decoration: none;
+}
+#pagebar a:hover{
+	background-color:darkgray;
+	border-radius:7px;
+	color:white;
+}
+.explain{
+	height:65px;
+	overflow:hidden;
+}
+tr:not(tr:last-child) td{
+	border-bottom:1px solid lightgray;
+}

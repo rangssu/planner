@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="/css/team/board/summernote-lite.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin/admin_aside.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin/notice_write.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/team/board/summernote-lite.min.js"></script>
+	<script type="text/javascript" src="/js/team/board/summernote-ko-KR.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.all.min.js"></script>
+</head>
+<body>
+<aside th:replace="~{/fragments/adminAside :: adminAside}"></aside>
+<main id="main">
+ <span style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; ADMIN</span>
+	<form th:action="@{/admin/notice}" method="post" id="noticeForm"> 
+		<div class="titleBox">
+			<input type="text" name="notice_title" id="notice_title" placeholder="공지사항 제목을 입력하세요." required><br/>
+		</div>
+		<div class="post-form">
+			<textarea name="notice_content" id="summernote"></textarea>
+		</div>  
+		<div class="writeBtns">
+			<button type="button" class="saveBtn">글 작성</button>
+			<button type="button" class="cancelBtn">취소</button>
+		</div>
+	</form>
+</main>
+	<script src="/js/common.js"></script>
+	<script src="/js/admin/notice_write.js"></script>
+	<script src="/js/admin/editor.js"></script>
+	<script src="/js/admin/admin_aside.js"></script>
+</body>
+</html>

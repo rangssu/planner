@@ -1,0 +1,140 @@
+.searchMain {
+	margin-top: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.search_title {
+	color: gray;
+	font-weight: bold;
+	font-size: 27px;
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	white-space: nowrap;
+    overflow: hidden;
+    width: 400px;
+}
+
+.title_text {
+	margin: 0px 10px;
+}
+
+.search_sub {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+/* 검색 인풋박스 */
+#keywordInput {
+	width: 200px;
+	height: 30px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 2px solid darkgray;
+	transition: ease-in 1.0s;
+}
+#keywordInput:focus {
+	outline: none;
+	border-bottom: 2px solid lightgray;
+	transition: ease-out 1.0s;
+}
+
+
+.searchTable {
+	width: 600px;
+	border: 2px solid #ddd;
+	border-radius: 20px;
+	padding: 20px;
+	box-shadow: 0px 0px 10px 1px lightgray;
+}
+.searchTable table{
+	margin: 0 auto;
+}
+
+.searchTable a {
+	text-decoration:none;
+	color: blueviolet;
+}
+
+.search_sub_tr {
+	font-size: 18px;
+	color: darkgray;
+}
+
+.search_tr {
+	font-size: 16px;
+	color: gray;
+	height: 1.8em;
+}
+.search_tr1 {
+	padding: 0 0 10px;
+}
+.search_td1 {
+	width: 160px;
+	text-align: center;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+.search_td2 {
+	width: 140px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.search_td3 {
+	text-align: center;
+/* 	width: 40px; */
+
+}
+
+.search_td4 {
+	width: 80px;
+	display: flex;
+	align-items: center;
+    margin-top: 5px;
+}
+
+.paging {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.search_a {
+	margin: 0px 10px;
+	color: purple;
+}
+
+.fr-status {
+	font-style: oblique;
+	font-size: 14px;
+	color: #949494;
+}
+.status_box {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.notsearch {
+	font-size: 18px;
+    font-weight: bold;
+    color: mediumturquoise;
+    margin-top: 10px;
+}
+
+.search_img {
+	margin-top: 3%;
+    margin-right: 1%;
+}

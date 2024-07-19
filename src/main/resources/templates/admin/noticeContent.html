@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/admin/admin_aside.css">
+<link rel="stylesheet" type="text/css" href="/css/admin/notice_content.css">
+</head>
+<body>
+<aside th:replace="~{/fragments/adminAside :: adminAside}"></aside>
+<main id="main">
+ <span style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776; ADMIN</span>
+ 	<div class="noticeDetail">
+ 		<span class="noticeTitle" th:text="${noticeDTO.notice_title}"></span>
+ 		<div class="noticeContent" th:utext="${noticeDTO.notice_content}"></div>
+ 	</div>
+    <input type="hidden" th:value="${noticeDTO.notice_id}" id="noticeNumber"/>
+    <div class="noticeDetailBtns">
+    	<a th:href="@{|/admin/noticeUpdateForm/${noticeDTO.notice_id}|}"><button type="button">글 수정</button></a>
+    	<a th:href="@{|/admin/noticeDelete/${noticeDTO.notice_id}|}"><button type="button">글삭제</button></a>
+	</div>
+</main>
+    <script th:src="@{/js/admin/notice.js}"></script>
+    <script src="/js/admin/admin_aside.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planner.mapper.ScheduleMapper">
+
+	<insert id="schedule_insert" parameterType="ScheduleDTO" useGeneratedKeys="true" keyProperty="schedule_id"  keyColumn="schedule_id">
+		insert into schedule (schedule_id, member_id,team_id, schedule_title, schedule_content, schedule_start, schedule_end)
+		values(schedule_seq.nextVal,#{member_id} ,#{team_id, jdbcType=BIGINT}, #{schedule_title}, #{schedule_content}, #{schedule_start, jdbcType=TIMESTAMP}, #{schedule_end, jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="schedule_select" resultType="ScheduleDTO">
+	SELECT S.*, M.place, M.address
+		FROM schedule S
+		left outer join map M
+		on S.schedule_id = M.schedule_id
+		WHERE
+		<if test="team_id == -1">
+			S.member_id = #{member_id}
+			and S.team_id is null
+		</if>
+		<if test="team_id != -1">
+			S.team_id = #{team_id}
+		</if>
+		and #{date} between to_char(schedule_start, 'yyyyMMdd') and to_char(schedule_end, 'yyyyMMdd')
+        ORDER BY S.schedule_start ASC, S.schedule_end ASC, S.schedule_id ASC
+	</select>
+	
+	<update id="schedule_update" parameterType="ScheduleDTO">
+	    update schedule
+	    set schedule_title = #{schedule_title}, 
+	        schedule_content = #{schedule_content},
+	        schedule_start = #{schedule_start, jdbcType=TIMESTAMP}, 
+	        schedule_end = #{schedule_end, jdbcType=TIMESTAMP}
+	    where schedule_id = #{schedule_id} 
+	</update>
+	
+	<delete id="schedule_delete">
+		delete from schedule where schedule_id = #{schedule_id}
+	</delete>
+	
+	<select id="schedule_search" parameterType="ScheduleSearchDTO" resultType="ScheduleDTO">
+		select * from schedule where
+		<if test='so eq "T"'>
+			schedule_title like '%'||#{cal_title}||'%'
+		</if>
+		<if test='so eq "D"'>
+			(#{cal_date} between schedule_start and schedule_end
+			or #{cal_date} = to_char(schedule_start, 'yyyy-MM-dd')
+			or #{cal_date} = to_char(schedule_end, 'yyyy-MM-dd'))
+		</if>
+		and team_id = #{team_id}
+	</select>
+	
+	<select id="schedule_select_one">
+		select s.*, m.address, m.place
+		from schedule s
+		join map m
+		on m.schedule_id = s.schedule_id
+		where s.schedule_id = #{schedule_id}
+	</select>
+
+	<select id="calendarPrint" parameterType="CalendarDTO" resultType="CalendarPrintDTO">
+		select schedule_id,
+			schedule_title,
+		    to_char(schedule_start, 'yyyymmdd') as schedule_start,
+		    to_char(schedule_end, 'yyyymmdd') as schedule_end
+		from schedule
+		where
+		<if test='team_id eq null'>
+			member_id = #{member_id}
+			and team_id is null
+		</if>
+		<if test='team_id neq null'>
+			team_id = #{team_id}
+		</if>
+		    and (schedule_start between #{start_date} and #{end_date}+1
+		        or schedule_end between #{start_date} and #{end_date}+1
+		        or <![CDATA[(schedule_start < #{start_date}
+		        	and schedule_end > #{end_date})]]>
+		        )
+		order by schedule_start asc, schedule_end asc, schedule_id asc
+	</select>
+
+</mapper>

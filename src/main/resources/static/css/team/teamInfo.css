@@ -1,0 +1,25 @@
+.enter-br{
+	white-space: pre-wrap;
+}
+.td120{
+	width:120px;
+}
+.td350{
+	width:350px;
+}
+.sbox{
+	width:560px;
+	padding:20px;
+	margin:20px auto;
+}
+#info{
+	width:500px;
+	margin:0 auto;
+}
+#info > tr, td{
+	padding:15px 5px 5px;
+}
+#info td button{
+	padding:2px 5px;
+	vertical-align: bottom;
+}

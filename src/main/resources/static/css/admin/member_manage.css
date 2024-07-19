@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+.mainBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.manageTop {
+	width: 60%;
+	font-weight: bold;
+	color: rgb(100, 100, 100);
+}
+
+.statusTable {
+	margin: 20px 0;
+	border-top: 2px solid black;
+	text-align: center;
+	width: 60%;
+	border-collapse: collapse;
+}
+
+.statusTr {
+	height: 50px;
+	border-bottom: 1px solid #ddd;
+}
+
+.statusTh {
+	height: 50px;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.statusTd {
+	font-size: 18px;
+	color: rgb(100, 100, 100);
+}
+
+.member_update_status {
+	border-radius: 8px;
+	color: rgb(100, 100, 100);
+	border: 1px solid #ddd;
+	width: 80px;
+	height: 35px;
+}
+
+#member_status {
+	border-radius: 5px;
+	color: rgb(100, 100, 100);
+	border: 1px solid #ddd;
+	width: 80px;
+}
+
+.changeStatusBtn {
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 10px;
+	color: gray;
+	border-radius: 3px;
+	background-color: white;
+	border: 2px solid rgba(0, 0, 0, .2);
+	cursor: pointer;
+}
+.changeStatusBtn:hover {
+	color: white;
+	background-color : rgba(0, 0, 0, .2);
+}

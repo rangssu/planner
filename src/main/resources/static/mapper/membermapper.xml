@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planner.mapper.MemberMapper">
+	
+	<!-- 소셜로그인 회원생성 -->
+	<insert id="createMember" parameterType="ReqOAuth2MemberAdd">
+		INSERT INTO member(
+			member_id,
+			member_birth,
+			member_phone,
+			member_gender,
+			member_email,
+			member_password,
+			member_name,
+			oauth_id,
+			member_status,
+			oauth_type, 
+			member_role,
+			member_reg
+		)	VALUES	(
+			member_seq.nextval,
+			'2020-02-01',
+			'none',
+			'none',
+			#{member_email},
+			#{member_password},
+			#{member_name},
+			#{oauth_id},
+			#{member_status},
+			#{oauth_type},
+			#{member_role},
+			sysdate
+		)
+	</insert>
+		<!--member_seq.NEXTVAL ,nextval('member_seq'),now(), sysdate -->
+	<!-- 회원가입 -->
+	<insert id="memberInsert" parameterType="MemberDTO">
+			INSERT INTO member(
+				member_id,
+				member_password,
+				member_name,
+				member_birth,
+				member_email,
+				member_phone,
+				member_gender,
+				member_reg,
+				member_status,
+				member_role,
+				oauth_id
+				) values (
+				member_seq.nextval,
+				#{member_password},
+				#{member_name},
+				#{member_birth},
+				#{member_email},
+				#{member_phone},
+				#{member_gender},
+				sysdate,
+				'B',
+				#{member_role},
+				'none'
+			)
+	</insert>
+	<!--member_seq.NEXTVAL , sysdate -->
+	
+	<!-- 소셜로그인 추가 회원정보 -->
+	<update id="fetchAdditionalUserInfo" parameterType="ReqOAuth2Signup">
+		UPDATE member
+		SET	
+			member_birth = #{member_birth},
+			member_phone = #{member_phone},
+			member_gender = #{member_gender},
+			member_status = #{member_status},
+			member_role	= #{member_role}
+		<if test="member_email != null">
+            , member_email = #{member_email}
+        </if>
+		WHERE
+			member_id = #{member_id}
+	</update>
+	
+	<!-- 회원 수정 -->
+	<update id="memberUpdate" parameterType="ReqMemberUpdate">
+		UPDATE member
+		SET
+			member_name = #{member_name},
+			member_birth = #{member_birth},
+			member_phone = #{member_phone}
+		WHERE
+			member_id = #{member_id}
+	</update>
+		
+	
+	<select id="isTeamMaster" resultType="int">
+		select count(*)
+		from team
+		where team_id in 
+    	(select team_id
+    	from team_member
+   	 	where member_id = #{member_id}
+    	and tm_grade='TEAM_MASTER')
+	</select>
+	<!-- 회원 상태변경 -->
+	<update id="changeMemberStatus">
+		UPDATE member
+		SET
+			member_status = #{member_status}
+		WHERE
+			member_id = #{member_id}
+	</update>
+	
+	<!-- OAtuhID 고유번호로 회원찾기 -->
+	<select id="findByOAuthID" resultType="ResMemberDetail">
+		SELECT *
+		FROM member
+		WHERE oauth_id = #{oauthId}
+	</select>
+	
+	
+		<!-- 일반로그인회원 정보 -->
+	<select id="formMember" resultType="ResMemberDetail">
+		SELECT * 
+		FROM member
+		WHERE
+			member_email = #{member_email}
+			AND oauth_id = 'none'
+	</select>
+	
+		<!-- 소셜로그인회원 정보 -->
+	<select id="socialMember" resultType="ResMemberDetail">
+		SELECT * 
+		FROM member
+		WHERE
+			member_email = #{member_email}
+			AND oauth_id != 'none'
+	</select>
+	
+	<!-- 회원이메일, 소셜로그인 타입으로 유저 정보 가져오기 -->
+	<select id="findByEmailAndOAuthType" >
+		SELECT *
+		FROM member
+		WHERE
+			member_email = #{member_email} 
+		AND
+			oauth_type = #{oauth_type}
+	</select>
+	
+	<!-- 계정 갯수 -->
+	<select id="accountCount">
+		SELECT 	count(*)
+		FROM	member
+		WHERE
+			member_email = #{toEmail}
+	</select>
+	
+	<!-- 비번변경 -->
+	<update id="changePassword" parameterType="ReqChangePassword">
+		UPDATE 	member 
+		SET		member_password = #{newPassword}
+		WHERE
+			member_id = #{member_id}
+	</update>
+	
+	<!-- ==================universe================== -->
+
+	
+	<!-- 회원 시퀀스로 객체 가져오기 (친구 객체 찾을 때 사용) -->
+	<select id="findByMemberSeq" resultType="MemberDTO">
+		select *
+		from member
+		where member_id = #{member_id}
+	</select>
+	
+	<!-- 회원 시퀀스로 이메일 찾기 (친구 이메일 찾을 때 사용) -->
+	<select id="findEmailBySeq" resultType="String">
+		select member_email
+		from member
+		where member_id = #{member_id}
+	</select>
+	
+	<!-- 회원 시퀀스로 이메일 찾기 (친구 이메일 찾을 때 사용) -->
+	<select id="findNameBySeq" resultType="String">
+		select member_name
+		from member
+		where member_id = #{member_id}
+	</select>
+	
+	<!-- 모든 회원 정보 / 페이징 처리 / 키워드 추가 / 이메일 '@' 앞 부분만 검색 가능 / 회원 목록 숨김 / 검색으로만 찾을 수 있음 -->
+	<select id="search" resultType="MemberDTO">
+		<![CDATA[
+			select *
+			from
+			(select distinct m.*, fr.member_send_id, rownum r
+			from (
+				select *
+				from member
+				where member_id != #{member_id}
+				and substr (member_email, 1, instr(member_email, '@') - 1) like '%' || #{keyword} || '%'
+				and member_status = 'B'
+				and member_role = 'ROLE_USER'
+			)m
+			left outer join friend_request fr
+			on m.member_id = fr.member_send_id
+			and m.member_id = fr.member_receive_id
+			where fr.friend_request_status != 'F'
+			or fr.member_receive_id is null)
+			where r between #{start} and #{end}
+		]]>
+	</select>
+	
+	<!-- 모든 회원 수 -->
+	<select id="searchCount" resultType="int">
+		<![CDATA[
+			select count(*)
+			from (
+				select *
+				from member
+				where member_id != #{member_id}
+				and substr (member_email, 1, instr(member_email, '@') - 1) like '%' || #{keyword} || '%'
+				and member_status = 'B'
+			)m
+			left outer join friend_request fr
+			on m.member_id = fr.member_send_id
+			and m.member_id = fr.member_receive_id
+			where fr.friend_request_status != 'F'
+			or fr.member_receive_id is null
+		]]>
+	</select>
+	
+	<!-- ==============================주완-->
+		<!-- 멤버 회원상태  -->
+	<select id="memberStatus" resultType="MemberDTO">
+			select b.*
+			from (select m.*, rownum as rn
+			      from member m
+			      where m.member_status = #{member_status}
+			      and m.member_role = 'ROLE_USER'
+			      order by m.member_id desc
+			     ) b
+			where b.rn between #{start} and #{end}
+			order by b.rn desc
+	</select>
+	
+		<!-- 멤버 회원 카운터 -->
+		<select id ="memberStatusCount" resultType="int">
+			select count(*) from member where member_status = #{member_status} and member_role = 'ROLE_USER'
+		</select>
+	<!-- 전체 회원보기  -->
+	<select id="memberAll" resultType="MemberDTO">
+		select b.* from 
+		(select m.*, rownum as rn from member m
+		 where m.member_role = 'ROLE_USER'
+		 order by member_id desc)b 
+		 where rn between #{start} and #{end}
+		 order by rn desc
+	</select>
+	<!-- 전체 회원 카운터 -->
+	<select id="memberAllCount">
+		select count(*) from member  where member_role = 'ROLE_USER'
+	</select>
+	<update id="memberStatusUpdate" parameterType="MemberDTO">
+		update member 
+		set member_status =#{member_status}
+		where member_id =#{member_id}
+	</update>
+</mapper>

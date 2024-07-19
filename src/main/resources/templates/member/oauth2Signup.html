@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>회원 가입</title>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<link rel="stylesheet" type="text/css" href="/css/member/oauth2insert.css">
+	<link rel="stylesheet" type="text/css" href="/css/header.css"	/>
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.all.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<header th:replace="~{/fragments/header :: header}"></header>
+		<main class="oauth2Main">
+			<form  action="/oauth2/auth/signup" method="post" class="oauth2Form" onsubmit="return validateOauth2Insert()">
+				<input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+				<input type="hidden" id="member" th:value="${member}"/>
+				<input type="hidden" name="member_id" th:value="${member.member_id}"/>
+				<input type="hidden" id="type" value="insert">
+				
+				<span class="joinText">회원가입을 위해<br> 정보를 입력해주세요</span>
+				<div th:if="${member != null && member.oauth_type =='kakao'}" class="forKakaoUser">
+					<div class="emailText">
+						<label for="email">이메일(아이디)</label><input type="checkbox" id="emailChkBox"><span class="authChkText">인증여부</span>
+					</div>
+					<input type="email" id="email" name="member_email">
+									<!-- 이메일 인증 버튼 -->
+					<div class="emailChkBtnBox">
+						<button type="button" class="emailChkBtn" id="emailChkBtn">이메일 인증</button>
+					</div>
+				</div>
+				<label for="birth">생년월일</label>
+				<input type="date" name="member_birth" id="birth" required="required"	/>
+				
+				<label for="phone">전화번호</label>
+				<input type="number" name="member_phone" id="phone" required="required" placeholder="-빼고 작성해주세요"/>			
+				<div class="genderCon">
+					<div class="genderBox">
+						<div>
+							<label for="m">남성</label><input type="radio" name="member_gender" value="M" id="m"	/>
+						</div>
+						<div>
+							<label for="w">여성</label><input type="radio" name="member_gender" value="W" id="w"	/>
+					    </div>
+					</div>
+				</div>	
+				<div class="signChkBox">
+					<input type="checkbox" id="signChk">개인정보 수집 및 이용에 동의합니다.<a href="#" class="terms" onclick="openModal('signModal')">[이용약관]</a>
+				</div>
+				<button type="submit" class="joinBtn">회원가입</button>
+			</form>
+						<!-- 이용약관 모달 -->
+			<div class="signChkModal" id="signModal">
+				<div class="modalBody">
+					<div class="Modaltop">
+						<button type="button" class="Xbtn" onclick="closeModal('signModal')">X</button>
+					</div>
+					<div class="modalMain">
+						<h1>이용약관</h1>
+						<span>대충이용약관임</span>
+					</div>
+					<div class="btns">
+						<button type="button" class="closeBtn" onclick="closeModal('signModal')">확인</button>
+					</div>
+				</div>
+			</div>
+			
+				<!-- 인증코드 입력 모달 -->
+			<div class="authCodeModal" id="authCodeModal">
+				<div class="modalBody">
+					<div class="Modaltop">
+						<button type="button" class="Xbtn" onclick="closeModal('authCodeModal')">X</button>
+					</div>
+					<div class="modalMain">
+						<div class="inputCodeCon" id="inputCodeBox">
+							<span class="authText">인증번호를 입력해주세요.</span>
+							<div class="inputCodeBox">
+								<input type="text" name="inputCode" id="inputCode">
+							</div>
+							<div class="authCodeBtns">
+								<button type="button" class="codeChkBtn">인증완료</button>
+								<button type="button" class="resendBtn">인증번호 재전송</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<script type="text/javascript" src="/js/header.js"></script>
+		<script src="/js/common.js"></script>
+		<script src="/js/member/email_chk.js"></script>
+		<script src="/js/modal.js"></script>
+		<script type="text/javascript" src="/js/member/oauth2_insert.js"></script>
+</body>
+</html>

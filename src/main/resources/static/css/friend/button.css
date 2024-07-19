@@ -1,0 +1,86 @@
+.custom-btn {
+	width: 60px;
+	height: 20px;
+	color: #fff;
+	border-radius: 5px;
+	padding: 10px 25px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 500;
+	background: transparent;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: inline-block;
+	box-shadow: inset
+				2px 2px 2px 0px rgba(255,255,255,.5),
+				7px 7px 20px 0px rgba(0,0,0,.1),
+				4px 4px 5px 0px rgba(0,0,0,.1);
+	outline: none;
+}
+
+/* 검색 버튼 */
+.btn-kw {
+	width: 40px;
+	background-color: #89d8d3;
+	background-image: linear-gradient(315deg, #89d8d3 0%, #cfcfcf 74%);
+	line-height: 18px;
+	padding: 0;
+	border: none;
+}
+.btn-kw:hover {
+	background-color: #89d8d3;
+	background-image: linear-gradient(315deg, #89d8d3 0%, silver 74%);
+}
+
+/* 친구추가, 수락 버튼 */
+.btn-add, .btn-access {
+	background-color: #4dccc6;
+	background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+	line-height: 18px;
+	padding: 0;
+	border: none;
+}
+.btn-add:hover, .btn-access:hover {
+	background-color: #89d8d3;
+	background-image: linear-gradient(315deg, #89d8d3 0%, silver 74%);
+}
+.btn-add span, .btn-kw span, .btn-access span {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* 수락 버튼 */
+.btn-access {
+	background-color: #a5a5a5;
+	background-image: linear-gradient(315deg, #a5a5a5 0%, #b4b1d6 74%);
+	line-height: 18px;
+	padding: 0;
+	border: none;
+}
+
+/* 비활성화된 버튼 */
+.custom-btn:disabled {
+	pointer-events: none;
+	opacity: 0;
+	transition: 1.2s;
+}
+
+/* 목록, 친구삭제 버튼 */
+.btn-list, #deleteBtn {
+	width: 80px;
+	height: 30px;
+	background-color: #80d0b4;
+	background-image: linear-gradient(315deg, #80d0b4 0%, #cfcfcf 74%);
+	line-height: 18px;
+	padding: 0;
+	border: none;
+}
+.btn-list:hover, #deleteBtn:hover {
+	background-color: #89d8d3;
+	background-image: linear-gradient(315deg, #89d8d3 0%, silver 74%);
+}
+.btn-list span, #deleteBtn span, .btn-access span {
+	display: block;
+	width: 100%;
+	height: 100%;
+}

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planner.mapper.NoticeMapper">
+	<insert id="noticeInsert" parameterType="NoticeDTO" useGeneratedKeys="true" keyColumn="notice_id" keyProperty="notice_id">
+		insert into notice values (
+			notice_seq.nextval,
+			#{notice_title},
+			#{notice_content},
+			sysdate
+		)
+	</insert>
+	
+	<!-- 공지사항 이미지저장 -->
+	<insert id="saveImg" parameterType="ReqNoticeImg">
+		INSERT INTO notice_img(
+			notice_img_id,
+			original_name,
+			save_name,
+			extension
+		)	VALUES	(
+			notice_img_seq.nextval,
+			#{originalName},
+			#{saveName},
+			#{extension}
+		)
+	</insert>
+	
+	<!-- 이미지 테이블에 공지사항 시퀀스 삽입 -->
+	<update id="insertNoticeId">
+		UPDATE 	notice_img
+		SET		notice_id = #{notice_id}
+		WHERE
+			save_name = #{imgFileName}
+	</update>
+	
+	<!-- 등록된 에디터 내용 가져오기 -->
+	<select id="findContentBynoticeId" resultType="String">
+		SELECT	notice_content
+		FROM	notice
+		WHERE	notice_id = #{notice_id}
+	</select>
+	
+	
+	<select id="noticeSelect" resultType="NoticeDTO">
+		select c.* from
+		(select b.* , rownum as rn from (select *
+			from notice 
+			order by notice_id desc) b)c
+				where rn between #{start} and #{end}
+		order by rn asc
+	</select>
+			<!-- 성민형 개인용 -->
+<!-- 		SELECT b.* -->
+<!-- 	FROM ( -->
+<!-- 	    SELECT n.*, ROW_NUMBER() OVER (ORDER BY notice_id DESC) AS rn -->
+<!-- 	    FROM notice n -->
+<!-- 	) b -->
+<!-- 	WHERE b.rn BETWEEN #{start} AND #{end} -->
+<!-- 	ORDER BY b.rn DESC; -->
+	<select id="noticeAllSelect" resultType="int">
+		select count(*) from notice 
+	</select>
+	
+	<select id="noticeContent" resultType="NoticeDTO">
+		select * from notice where notice_id = #{notice_id}
+	</select>
+	
+		
+	<!-- 잉여 이미지 데이터 전부 가져오기 -->
+	<select id="ImagesWithoutNoticeId" resultType="String">
+		SELECT 	save_name
+		FROM 	notice_img
+		WHERE
+			notice_id is null
+	</select>
+	
+	<update id="noticeUpdate" parameterType="NoticeDTO">
+		update notice
+		set	notice_title = #{notice_title} ,
+			notice_content = #{notice_content}
+			where notice_id = #{notice_id}
+	</update>
+	
+	<delete id="noticeDelete" parameterType="Long">
+		delete notice 
+		where notice_id = #{notice_id}
+	</delete>
+	
+	<!-- 이미지 삭제 -->
+	<delete id="deleteImg">
+		DELETE 
+		FROM	notice_img
+		WHERE
+			save_name = #{imgName}
+	</delete>
+	
+	<!-- 잉여데이터 삭제 -->
+	<delete id="deleteImagesWithoutNoticeId">
+		DELETE 
+		FROM	notice_img
+		WHERE
+			notice_id is null
+	</delete>
+	
+</mapper>

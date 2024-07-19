@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header class="nodrag" th:fragment="header">
+<!-- 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- 헤더 -->
+<div class="header">
+    <div class="header-inner">
+        <a href="/planner/main" class="logo img-box block">
+			<img src="/images/plandas.png" width="30px" height="30px" alt="planner" />
+        </a>
+        <nav class="top-menu-bar row line-height-0">
+            <ul class="row">
+		  		<li class="cell menu-1" sec:authorize="isAuthenticated()">
+                    <a href="javascript:void(0);">일정</a>
+                    <ul>
+                        <li><a href="/planner/calendar" class="delay-1">달력</a></li>
+                    </ul>
+                    <div class="sub-menu-height sub-menu-height-1"></div>
+		  		</li>
+		  		<li class="cell menu-2" sec:authorize="isAuthenticated()">
+                    <a href="javascript:void(0);">그룹</a>
+		  			<ul>
+		  				<li><a href="/team/main" class="delay-1">그룹 목록</a></li>
+		  				<li><a href="/team/create" class="delay-2">그룹 생성</a></li>
+		  				<li><a href="/team/search" class="delay-3">그룹 찾기</a></li>
+		  			</ul>
+                    <div class="sub-menu-height sub-menu-height-2"></div>
+		  		</li>
+            </ul>
+            <ul class="row cell-right">
+		  		<li class="cell menu-3" sec:authorize="isAuthenticated()"><a href="javascript:void(0);">친구</a>
+		  			<ul class="sub">
+		  				<li><a href="/member/auth/search" class="delay-1">회원 검색</a></li>
+		  				<li><a href="/friend/receiveList" class="delay-2">받은 요청</a></li>
+		  				<li><a href="/friend/sendList" class="delay-3">보낸 요청</a></li>
+		  				<li><a href="/friend/list" class="delay-4">친구 목록</a></li>
+		  			</ul>
+                    <div class="sub-menu-height sub-menu-height-3"></div>
+		  		</li>
+		  		<li class="cell menu-4" sec:authorize="isAuthenticated()">
+                    <a href="javascript:void(0);">회원</a>
+		  			<ul>
+                        <li sec:authorize="isAuthenticated()"><a href="/member/auth/myInfo" class="delay-1">내정보</a></li>
+                        <li sec:authorize="isAuthenticated()"><a href="/member/anon/signout" class="delay-2">로그아웃</a></li>
+                    </ul>
+                    <div class="sub-menu-height sub-menu-height-4"></div>
+		  		</li>
+		  		<li class="cell menu-5" sec:authorize="hasRole('SUPER_ADMIN')">
+                    <a href="javascript:void(0);">관리자</a>
+		  			<ul>
+                        <li sec:authorize="isAuthenticated()"><a href="/admin/notice" class="delay-1">공지사항</a></li>
+                        <li sec:authorize="isAuthenticated()"><a href="/admin/memberAllStatus" class="delay-2">회원관리</a></li>
+                    </ul>
+                    <div class="sub-menu-height sub-menu-height-5"></div>
+		  		</li>
+		  	</ul>
+            <div class="sub-menu-bg"></div>
+        </nav>
+    </div>
+</div>
+
+<!-- 모바일 헤더 -->
+<div class="m-header">
+	<a href="/planner/main" class="logo img-box block">
+		<img src="/images/plandas.png" width="30px" height="30px" alt="planner" />
+	</a>
+	<a href="/member/auth/myInfo" sec:authorize="isAuthenticated()" class="search img-box block myinfo">
+		<img sec:authorize="isAuthenticated()" src="/images/myinfo.svg" width="20px" height="30px" alt="myinfo">
+	</a>
+	<a href="/member/anon/signout" sec:authorize="isAuthenticated()" class="search img-box block">
+		<img sec:authorize="isAuthenticated()" src="/images/logout.svg" width="30px" height="30px" alt="logout">
+	</a>
+	<div class="m-menu-btn">
+    	<div></div>
+	    <div></div>
+	    <div></div>
+	</div>
+    <div class="mobile-mask"></div>
+    <div class="m-menu-list">
+        <ul class="m-menu-ul">
+            <li class="delay-1">
+                <a href="javascript:void(0);">일정<span class="cell-right"><i class="fas fa-chevron-down"></i></span></a>
+                <ul>
+                    <li><a href="/planner/calendar">달력</a></li>
+                </ul>
+            </li>
+            <li class="delay-2">
+                <a href="javascript:void(0);">그룹<span class="cell-right"><i class="fas fa-chevron-down"></i></span></a>
+                <ul>
+                    <li><a href="/team/main">그룹 목록</a></li>
+                    <li><a href="/team/create">그룹 생성</a></li>
+                    <li><a href="/team/search">그룹 찾기</a></li>
+                </ul>
+            </li>
+            <li class="delay-3">
+                <a href="javascript:void(0);">친구<span class="cell-right"><i class="fas fa-chevron-down"></i></span></a>
+                <ul>
+                    <li><a href="/member/auth/search">회원 검색</a></li>
+                    <li><a href="/friend/receiveList">받은 요청</a></li>
+                    <li><a href="/friend/sendList">보낸 요청</a></li>
+                    <li><a href="/friend/list">친구 목록</a></li>
+                </ul>
+            </li>
+            <li class="delay-4" sec:authorize="hasRole('SUPER_ADMIN')">
+                <a href="javascript:void(0);">관리자<span class="cell-right"><i class="fas fa-chevron-down"></i></span></a>
+                <ul>
+					<li><a href="/admin/notice">공지사항</a></li>
+					<li><a href="/admin/memberAllStatus">회원관리</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+</header>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8"/>
+	<title>그룹 정보 수정</title>
+	<link rel="stylesheet" type="text/css" href="/css/header.css">
+	<link rel="stylesheet" type="text/css" href="/css/team/teamCommon.css">
+	<link rel="stylesheet" type="text/css" href="/css/team/teamCreate.css">
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.1/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="/js/team/teamUpdate.js" defer></script>
+	<script type="text/javascript" src="/js/header.js" defer></script>
+</head>
+<body>
+<header th:replace="~{/fragments/header :: header}"></header>
+<div id="main-container"> <!-- main-container 시작 -->
+<form th:action="@{|/team/update?team_id=${dto.team_id}|}" method="post" id="team_form" class="sbox oi-btn" enctype="multipart/form-data" onsubmit="return imgcheck()">
+<h2 class="text-center">그룹 정보 수정</h2>
+<table th:if="${dto} != null" th:object="${dto}" id="info">
+	<tr>
+		<td><label for="team_name">그룹 이름</label></td>
+		<td>
+			<input type="text" th:field="*{team_name}" class="ul-input" maxlength="50" placeholder="2글자 이상 50글자 이하" required>
+			<button type="button" id="overlap_btn">중복검사</button>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="text-center">
+			<span id="overlap" style="display:none;"></span>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="team_explain">그룹 소개</label></td>
+		<td><textarea th:field="*{team_explain}" cols="42" rows="7" maxlength="333" placeholder="최대 333글자"></textarea></td>
+	</tr>
+	<tr>
+		<td>이미지</td>
+		<td>
+			<span th:if="*{team_image} != null">
+				<img th:src="'/team/img?img='+*{team_image}" th:alt="*{team_name}+' 그룹의 이미지'">
+				<label for="delimg" class="font-gray">이미지 제거 </label><input type="checkbox" name="delimg" id="delimg" value="delimg">
+			</span>
+			<span th:if="*{team_image} == null">
+				<img src="/images/team_default.png" alt="기본이미지"></img>
+				<span style="font-size:0.8em; color:gray;">기본 이미지</span>
+				<input type="hidden" name="delimg">
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="team_image">이미지 변경</label></td>
+		<td><input type="file" name="team_image" id="team_image" accept=".jpg, .jpeg, .png, .gif, .wbmp, .bmp, .tif, .tiff">
+			<br><span style="font-size:0.8em; color:gray;">이미지는 100x100 사이즈를 권장합니다.<br>움직이는 이미지는 지원하지 않습니다.</span>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">
+			<button type="button" id="submit_btn">수정</button>
+			<button type="button" id="reset_btn">리셋</button>
+			<button type="button" th:onclick="|window.location='/team/info?team_id=*{team_id}'|">취소</button>
+		</td>
+	</tr>
+</table>
+</form>
+</div> <!-- main-container 끝 -->
+<input th:if="${msg}" type="hidden" id="msg" th:value="${msg}">
+
+<script th:if="${dto} == null">
+	alert("잘못된 접근입니다");
+	location.replace('/team/main');
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+.noticeBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.topInBox {
+	width: 60%;
+}
+
+.noticeTable {
+	margin: 20px 0;
+	border-top: 2px solid black;
+	text-align: center;
+	width: 60%;
+	border-collapse: collapse;
+}
+
+.no_tr {
+	height: 50px;
+	border-bottom: 1px solid #ddd;
+}
+
+.no_th {
+	height: 50px;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.no_td {
+	font-size: 18px;
+	color: rgb(100, 100, 100);
+}
+
+.countText, .selectViewCountText {
+	font-weight: bold;
+	color: rgb(100, 100, 100);
+}
+
+.writeBtn {
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 10px;
+	color: gray;
+	width: 15%;
+	height: 30px;
+	border-radius: 3px;
+	background-color: white;
+	border: 2px solid rgba(0, 0, 0, .2);
+	cursor: pointer;
+}
+
+.writeBtn:hover {
+	color: white;
+	background-color: rgba(0, 0, 0, .2);
+}
+
+#ps {
+	border-radius: 5px;
+	color: rgb(100, 100, 100);
+	border: 1px solid #ddd;
+	width: 80px;
+}
